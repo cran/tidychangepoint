@@ -1,0 +1,114 @@
+---
+title: "tidychangepoint"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tidychangepoint}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Tidy methods for changepoint analysis
+
+```{r rlnorm-plot}
+library(tidychangepoint)
+```
+
+The `tidychangepoint` package allows you to use any number of algorithms for detecting changepoint sets in univariate time series with a common, `tidyverse`-compliant interface. 
+It also provides model-fitting procedures for commonly-used parametric models, tools for computing various penalty functions, and graphical diagnostic displays. 
+
+Changepoint sets are computed using the `segment()` function, which takes a numeric vector that is coercible into a `ts` object, and a string indicating the algorithm you wish you use. 
+`segment()` always returns a `tidycpt` object. 
+
+```{r}
+x <- segment(DataCPSim, method = "pelt")
+class(x)
+```
+
+Various methods are available for `tidycpt` objects. 
+For example, `as.ts()` returns the original data as `ts` object, and `changepoints()` returns the set of changepoint indices. 
+```{r}
+changepoints(x)
+```
+
+### Retrieving information using the `broom` interface
+
+`tidychangepoint` follows the design interface of the `broom` package. 
+Therefore, `augment()`, `tidy()` and `glance()` methods exists for `tidycpt` objects. 
+
+- `augment()` returns a `tsibble` that is grouped according to the regions defined by the changepoint set. 
+
+```{r}
+augment(x)
+```
+
+- `tidy()` returns a `tbl` that provides summary statistics for each region. These include any parameters that were fit, which are prefixed in the output by `param_`. 
+
+```{r}
+tidy(x)
+```
+
+- `glance()` returns a `tbl` that provides summary statistics for the algorithm. This includes the `fitness`, which is the value of the penalized objective function that was used. 
+
+```{r}
+glance(x)
+```
+
+### Other methods
+
+The `plot()` method leverages `ggplot2` to provide an informative plot, with the regions defined by the changepoint set clearly demarcated, and the means within each region also indicated. 
+
+```{r pelt-plot}
+plot(x)
+```
+
+Other generic functions defined for `tidycpt` objects include `fitness()`, `as.model()`, and `exceedances()`. 
+For example, `fitness()` returns a named vector with the value of the penalized objective function used. 
+
+```{r}
+fitness(x)
+```
+
+
+## Structure
+
+Every `tidycpt` objects contains two main children:
+
+- `segmenter`: The object that results from the changepoint detection algorithm. These can be of any class. Methods for objects of class `cpt`, `ga`, and `wbs` are currently implemented, and as well as `seg_basket` (the default internal class). Given a data set, a model, and a penalized objective function, a segmenter's job is to search the exponentially-large space of possible changepoint sets for the one that optimizes the penalized objective function (over the space of possible changepoint sets). Some segmenting algorithms (e.g., PELT) are deterministic, while others (e.g., genetic algorithms) are randomized. 
+- `model`: A model object inheriting from `mod_cpt`, an internal class for representing model objects. Model objects are created by model-fitting functions, all of whose names start with `fit_`. The `model` of a `tidycpt` object is the model object returned by the `fit_*()` function that corresponds to the one used by the `segmenter`. Given a data set, a model description, **and a set of changepoints**, the corresponding model-fitting function finds the values of the model parameters that optimize the model fit to the data.
+
+Both **segmenters and models** implement methods for the generic functions `changepoints()`, `as.ts()`, `nobs()`, `logLik()`, `model_name()`, and `glance()`. 
+However, it is important to note that while `tidychangepoint` does its best to match the model used by the `segmenter` to its corresponding model-fitting function, exact matches do not always exist. 
+Thus, the `logLik()` of the `segmenter` may not always match the `logLik()` of the `model`. 
+Nevertheless, squaring these values is the focus of ongoing work. 
+
+### Segmenters
+
+In the example above, the `segmenter` is of class `cpt`, because `segment()` simply wraps the `cpt.meanvar()` function from the `changepoint` package. 
+
+```{r}
+x |>
+  as.segmenter() |>
+  str()
+```
+
+In addition to the generic functions listed above, **segmenters** implement methods for the generic functions `fitness()`, `model_args()`, and `seg_params()`. 
+
+### Models
+
+The `model` object in this case is created by `fit_meanvar()`, and is of class `mod_cpt`. 
+
+```{r}
+x |>
+  as.model() |>
+  str()
+```
+
+In addition to the generic functions listed above, **models** implement methods for the generic functions `fitted()`, `residuals()`, `coef()`, `augment()`, `tidy()`, and `plot()`. 
