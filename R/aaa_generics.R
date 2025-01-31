@@ -228,6 +228,22 @@ as.model.default <- function(object, ...) {
   do.call(f, args)
 }
 
+#' Hannan–Quinn information criterion
+#' @seealso [stats::BIC()], [stats::AIC()]
+#' @export
+#' @family penalty-functions
+#' @examples
+#' # Compute the HQC
+#' HQC(fit_meanvar(CET, tau = NULL))
+#' 
+HQC <- function(object, ...) UseMethod("HQC")
+
+#' @rdname HQC
+#' @export
+HQC.default <- function(object, ...) {
+  HQC(logLik(object))
+}
+
 #' Modified Bayesian Information Criterion
 #' 
 #' @description
@@ -303,6 +319,19 @@ BMDL.default <- function(object, ...) {
   BMDL(logLik(object))
 }
 
+#' Schwarz information criterion
+#' @seealso [stats::BIC()], [stats::AIC()]
+#' @inheritParams stats::BIC
+#' @export
+#' @returns The value of [stats::BIC()]
+#' @family penalty-functions
+#' @examples
+#' # The SIC is just the BIC
+#' SIC(fit_meanvar(CET, tau = NULL))
+#' BIC(fit_meanvar(CET, tau = NULL))
+#' 
+SIC <- BIC
+
 #' Evaluate candidate changepoints sets
 #' @param x An object to evaluate
 #' @param ... arguments passed to methods
@@ -323,3 +352,10 @@ evaluate_cpts <- function(x, ...) UseMethod("evaluate_cpts")
 #' @family tidycpt-generics
 #' @export
 diagnose <- function(x, ...) UseMethod("diagnose")
+
+#' Extract the regions from a [tidycpt-class] object
+#' @param x An object that has regions
+#' @param ... Currently ignored
+#' @returns A [base::factor()] of intervals indicating the region 
+#' @export
+regions <- function(x, ...) UseMethod("regions")

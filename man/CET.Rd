@@ -5,7 +5,7 @@
 \alias{CET}
 \title{Hadley Centre Central England Temperature}
 \format{
-An object of class \code{xts} (inherits from \code{zoo}) with 362 rows and 1 columns.
+An object of class \code{xts} (inherits from \code{zoo}) with 366 rows and 1 columns.
 }
 \source{
 \url{https://www.metoffice.gov.uk/hadobs/hadcet/}
@@ -33,5 +33,8 @@ explore a variety of temperature features.
 \item Shi, et al. (2022, \doi{10.1175/JCLI-D-21-0489.1}),
 \item Parker, et al. (1992, \doi{10.1002/joc.3370120402})
 }
+}
+\seealso{
+\link[multitaper:CETmonthly]{multitaper::CETmonthly}
 }
 \keyword{datasets}

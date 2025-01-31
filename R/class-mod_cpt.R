@@ -173,7 +173,7 @@ augment.mod_cpt <- function(x, ...) {
   tibble::enframe(as.ts(x), name = "index", value = "y") |>
     tsibble::as_tsibble(index = index) |>
     dplyr::mutate(
-      region = cut_inclusive(index, pad_tau(tau, nobs(x))),
+      region = cut_by_tau(index, pad_tau(tau, nobs(x))),
       .fitted = fitted(x),
       .resid = residuals(x)
     ) |>
@@ -309,10 +309,9 @@ plot.mod_cpt <- function(x, ...) {
       linetype = 3
     ) + 
     ggplot2::scale_x_continuous("Time Index (t)", breaks = b) +
-    ggplot2::scale_y_continuous("Original Measurement") + 
     ggplot2::labs(
-      title = "Original times series",
-      subtitle = paste("Mean value is", round(mean(as.ts(x), na.rm = TRUE), 2))
+#      title = "Original time series",
+      subtitle = paste("Global mean value is", round(mean(as.ts(x), na.rm = TRUE), 2))
     )
 }
 
@@ -321,6 +320,17 @@ plot.mod_cpt <- function(x, ...) {
 #' @export
 print.mod_cpt <- function(x, ...) {
   utils::str(x)
+}
+
+#' @rdname regions
+#' @export
+#' @examples
+#' 
+#' cpt <- fit_meanshift_norm(CET, tau = 330)
+#' regions(cpt)
+#' 
+regions.mod_cpt <- function(x, ...) {
+  regions_tau(changepoints(x), nobs(x))
 }
 
 #' @rdname diagnose

@@ -47,6 +47,7 @@
 #' conducted. The length of the CET record affords us the opportunity to 
 #' explore a variety of temperature features.
 #' @source <https://www.metoffice.gov.uk/hadobs/hadcet/>
+#' @seealso [multitaper::CETmonthly]
 #' @references 
 #'   - Shi, et al. (2022, \doi{10.1175/JCLI-D-21-0489.1}), 
 #'   - Parker, et al. (1992, \doi{10.1002/joc.3370120402})
@@ -85,6 +86,23 @@
 #' Differences between leagues in Major League Baseball
 #' @docType data
 #' @description
-#' The difference in home runs hit per plate appearance between the 
-#' American League and the National League from 1925 to 2022. 
-"mlb_hrs"
+#' The difference in various statistics between the 
+#' American League and the National League from 1925 to 2023.
+#' Statistics include:
+#'   - `PA`: The total number of plate appearances
+#'   - `hr_rate_diff`: The difference in home runs per plate appearance
+#'   - `bavg_dff`: The difference in batting average
+#'   - `obp_diff`: The difference in on-base percentage
+#'   - `slg_diff`: The difference in slugging percentage
+#' @source The `Lahman` package
+"mlb_diffs"
+
+#' Italian University graduates by disciplinary groups from 1926-2013
+#' @docType data
+#' @description
+#' Italian University graduates by disciplinary groups during the years 1926-2013.
+#' @source <https://seriestoriche.istat.it/>
+#' @source Source: Istat- Ministero dell'istruzione pubblica, years 1926-1942
+#' @source Istat- Rilevazione sulle Università, years 1943-1997
+#' @source Miur- Rilevazione sulle Università, years 1998-2013
+"italy_grads"

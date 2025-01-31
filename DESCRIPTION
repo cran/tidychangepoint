@@ -1,12 +1,12 @@
 Package: tidychangepoint
 Title: A Tidy Framework for Changepoint Detection Analysis
-Version: 0.0.1
+Version: 1.0.0
 Authors@R: c(
     person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com", 
       role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-3279-0516")
     ),
     person(
-      "Biviana Marcela", "Suarez Sierra", email = "bmsuarezs@eafit.edu.co", 
+      "Biviana Marcela", "Suárez Sierra", email = "bmsuarezs@eafit.edu.co", 
       role = c("aut"), comment = c(ORCID = "0000-0003-2151-3537")
     ),    
     person(
@@ -32,23 +32,24 @@ License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Imports: broom, changepoint, cli, dplyr, GA, ggplot2, lifecycle,
-        memoise, methods, patchwork, purrr, scales, stringr, tibble,
-        tidyr, tsibble, vctrs, wbs, xts, zoo
-Depends: R (>= 4.1)
+        memoise, methods, patchwork, purrr, rlang, scales, stringr,
+        tibble, tidyr, tsibble, vctrs, wbs, xts, zoo
+Depends: R (>= 4.2)
 LazyData: true
-Suggests: bench, knitr, here, readr, rmarkdown, testthat (>= 3.0.0)
+Suggests: bench, knitr, here, multitaper, readr, rmarkdown, testthat
+        (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://beanumber.github.io/tidychangepoint/
 NeedsCompilation: no
-Packaged: 2024-07-31 18:52:59 UTC; bbaumer
+Packaged: 2025-01-31 20:37:42 UTC; bbaumer
 Author: Benjamin S. Baumer [aut, cre, cph]
     (<https://orcid.org/0000-0002-3279-0516>),
-  Biviana Marcela Suarez Sierra [aut]
+  Biviana Marcela Suárez Sierra [aut]
     (<https://orcid.org/0000-0003-2151-3537>),
   Arrigo Coen [aut] (<https://orcid.org/0000-0001-7798-7104>),
   Carlos A. Taimal [aut] (<https://orcid.org/0000-0002-8716-1282>),
   Xueheng Shi [ctb]
 Maintainer: Benjamin S. Baumer <ben.baumer@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-08-19 08:50:02 UTC
+Date/Publication: 2025-01-31 20:50:02 UTC
