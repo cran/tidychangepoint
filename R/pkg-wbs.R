@@ -5,6 +5,7 @@ as.seg_cpt.wbs <- function(object, ...) {
   seg_cpt(
     x = as.ts(object),
     pkg = "wbs",
+    base_class = class(object),
     algorithm = "Wild BinSeg",
     changepoints = changepoints(object),
     seg_params = list(seg_params(object)),
@@ -37,11 +38,11 @@ changepoints.wbs <- function(x, ...) {
 #' # Segment a time series using Wild Binary Segmentation
 #' x <- segment(DataCPSim, method = "wbs")
 #' 
-#' # Retrive its fitness
+#' # Retrieve its fitness
 #' fitness(x)
 #' 
 fitness.wbs <- function(object, ...) {
-  out <- 0
+  out <- object$cpt$ic.curve$mbic.penalty[1]
   names(out) <- "MBIC"
   out
 }

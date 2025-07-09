@@ -49,7 +49,9 @@ ls_methods <- function() {
     "coen", "tidychangepoint", "seg_basket", "segment_coen()", NA,
     "random", "GA", "tidyga", "segment_ga_random()", "segment_ga()",
     "manual", "tidychangepoint", "seg_cpt", "segment_manual()", NA,
-    "null", "tidychangepoint", "seg_cpt", "segment_manual()", NA
+    "null", "tidychangepoint", "seg_cpt", "segment_manual()", NA,
+    "segmented", "segmented", "segmented", NA, "segmented::segmented()",
+    "cga", "changepointGA", "cga", "segment_cga()", "changepointGA::GA()"
   )
 }
 
@@ -104,6 +106,8 @@ ls_coverage <- function() {
     tibble::tribble(
       ~method, ~model, ~penalty,
       "wbs", NA, NA,
+      "cga", NA, NA,
+      "segmented", NA, NA,
       "ga-shi", "fit_meanshift_norm_ar1", "BIC",
       "ga-coen", "fit_nhpp", "BMDL",
       "coen", "fit_nhpp", "BMDL",

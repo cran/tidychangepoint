@@ -161,7 +161,11 @@ compare_algorithms <- function(x, ...) {
 #' 
 #' # Plot a segmented time series and show the time labels on the x-axis
 #' plot(segment(CET, method = "pelt"), use_time_index = TRUE)
-plot.tidycpt <- function(x, use_time_index = FALSE, ...) {
+#' 
+#' # Label the y-axis correctly
+#' segment(CET, method = "pelt") |>
+#'   plot(use_time_index = TRUE, ylab = "Degrees Celsius")
+plot.tidycpt <- function(x, use_time_index = FALSE, ylab = NULL, ...) {
   g <- plot(x$model)
   b <- g |>
     ggplot2::ggplot_build() |>
@@ -173,7 +177,14 @@ plot.tidycpt <- function(x, use_time_index = FALSE, ...) {
       n <- length(t)
       indices <- 1:nobs(x$model)
       good <- t %in% indices
-      out <- x$time_index[ifelse(good, t, NA)] |>
+      out <- x$time_index[ifelse(good, t, NA)]
+      
+      # if it's just years, show only the years
+      if (all(lubridate::yday(out) == 1, na.rm = TRUE)) {
+        out <- lubridate::year(out)
+      }
+      
+      out <- out |>
         as.character()
       replace(out, is.na(out), "")
     }
@@ -181,13 +192,20 @@ plot.tidycpt <- function(x, use_time_index = FALSE, ...) {
     g <- g +
       ggplot2::scale_x_continuous("Time", breaks = b$breaks, labels = my_labels)
   }
+  
+  # ylab
+  if (!is.null(ylab)) {
+    g <- g +
+      ggplot2::scale_y_continuous(name = ylab)
+  }
+  
   g
 }
 
 #' @rdname reexports
 #' @export
 print.tidycpt <- function(x, ...) {
-  cat("A tidycpt object\n")
+  cli::cli_alert_info("A tidycpt object. Segmenter \u2193")
   print(x$segmenter)
   print(x$model)
 }
@@ -197,6 +215,28 @@ print.tidycpt <- function(x, ...) {
 regions.tidycpt <- function(x, ...) {
   regions(x$model)
 }
+
+#' @rdname reexports
+#' @export
+#' @examples
+#' # Summarize a tidycpt object
+#' summary(segment(CET, method = "pelt"))
+#' summary(segment(DataCPSim, method = "pelt"))
+summary.tidycpt <- function(object, ...) {
+  cli::cli_h1("Summary of tidycpt object")
+  data <- as.ts(object)
+  cli::cli_alert(
+    paste(
+      "y: Contains", length(data), 
+      "observations, ranging from", 
+      prettyunits::pretty_num(min(data)),
+      "to", prettyunits::pretty_num(max(data)), "."
+    )
+  )
+  summary(as.seg_cpt(object$segmenter))
+  summary(as.model(object))
+}
+
 
 #' @rdname diagnose
 #' @export
