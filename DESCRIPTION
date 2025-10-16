@@ -1,6 +1,6 @@
 Package: tidychangepoint
 Title: A Tidy Framework for Changepoint Detection Analysis
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com", 
       role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-3279-0516")
@@ -30,7 +30,7 @@ Description: Changepoint detection algorithms for R are widespread but have
     the 'broom' and 'ggplot2' packages. 
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: broom, changepoint, changepointGA, cli, dplyr, GA, ggplot2,
         lifecycle, lubridate, memoise, methods, patchwork, prettyunits,
         purrr, rlang, scales, segmented, stringr, tibble, tidyr,
@@ -43,7 +43,7 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://beanumber.github.io/tidychangepoint/
 NeedsCompilation: no
-Packaged: 2025-07-09 15:07:40 UTC; bbaumer
+Packaged: 2025-10-16 19:26:36 UTC; bbaumer
 Author: Benjamin S. Baumer [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0002-3279-0516>),
   Biviana Marcela Suárez Sierra [aut] (ORCID:
@@ -53,4 +53,4 @@ Author: Benjamin S. Baumer [aut, cre, cph] (ORCID:
   Xueheng Shi [ctb]
 Maintainer: Benjamin S. Baumer <ben.baumer@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-07-09 16:50:02 UTC
+Date/Publication: 2025-10-16 19:40:02 UTC
