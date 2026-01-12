@@ -2,7 +2,7 @@
 % Please edit documentation in R/class-mod_cpt.R, R/class-seg_basket.R,
 %   R/class-seg_cpt.R, R/class-tidycpt.R, R/mod_meanshift.R, R/mod_nhpp.R,
 %   R/pkg-GA.R, R/pkg-changepoint.R, R/pkg-changepointGA.R, R/pkg-segmented.R,
-%   R/pkg-wbs.R, R/reexports.R
+%   R/pkg-strucchange.R, R/pkg-wbs.R, R/reexports.R
 \docType{import}
 \name{as.ts.mod_cpt}
 \alias{as.ts.mod_cpt}
@@ -43,24 +43,14 @@
 \alias{nobs.cptga}
 \alias{as.ts.segmented}
 \alias{nobs.segmented}
+\alias{as.ts.breakpointsfull}
+\alias{nobs.breakpointsfull}
 \alias{as.ts.wbs}
 \alias{nobs.wbs}
 \alias{reexports}
-\alias{tidy}
 \alias{augment}
+\alias{tidy}
 \alias{glance}
-\alias{as.ts}
-\alias{logLik}
-\alias{AIC}
-\alias{BIC}
-\alias{nobs}
-\alias{fitted}
-\alias{residuals}
-\alias{coef}
-\alias{time}
-\alias{vec_ptype2}
-\alias{vec_cast}
-\alias{index}
 \title{Objects exported from other packages}
 \usage{
 \method{as.ts}{mod_cpt}(x, ...)
@@ -139,6 +129,10 @@
 
 \method{nobs}{segmented}(object, ...)
 
+\method{as.ts}{breakpointsfull}(x, ...)
+
+\method{nobs}{breakpointsfull}(object, ...)
+
 \method{as.ts}{wbs}(x, ...)
 
 \method{nobs}{wbs}(object, ...)
@@ -156,6 +150,7 @@ time labels?}
 \examples{
 # Plot a meanshift model fit
 plot(fit_meanshift_norm(CET, tau = 330))
+plot(fit_meanshift_norm(CET, tau = 330), plot.title.position = "plot")
 
 #' # Plot a trendshift model fit
 plot(fit_trendshift(CET, tau = 330))
@@ -185,12 +180,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{broom}{\code{\link[broom:reexports]{augment}}, \code{\link[broom:reexports]{glance}}, \code{\link[broom:reexports]{tidy}}}
-
-  \item{stats}{\code{\link[stats]{AIC}}, \code{\link[stats:AIC]{BIC}}, \code{\link[stats:ts]{as.ts}}, \code{\link[stats]{coef}}, \code{\link[stats:fitted.values]{fitted}}, \code{\link[stats]{logLik}}, \code{\link[stats]{nobs}}, \code{\link[stats]{residuals}}, \code{\link[stats]{time}}}
-
-  \item{vctrs}{\code{\link[vctrs]{vec_cast}}, \code{\link[vctrs]{vec_ptype2}}}
-
-  \item{zoo}{\code{\link[zoo]{index}}}
+  \item{generics}{\code{\link[generics]{augment}}, \code{\link[generics]{glance}}, \code{\link[generics]{tidy}}}
 }}
 
